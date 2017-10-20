@@ -15,25 +15,29 @@
 process.env.NODE_ENV = 'test';
 
 var mongoose = require("mongoose");
-//Receipe = mongoose.model('../../wit/webapp2/api/models/cookbook_model.js');
-
 var Receipe = require('../../wit/webapp2/api/models/cookbook_model.js');
+
 
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../../wit/webapp2/server');
-var should = chai.should();
 var expect = chai.expect;
 chai.use(require('chai-things'));
 chai.use(chaiHttp);
+
+
+var request = require('supertest');
+
 // require lodash for some maping features.
 var _ = require('lodash');
 var id = '59e9f960ff8b42eb0ed4bc51';
 var no_id = '59e9f960ff8b42eb0ed4bb51';
 
 
+
 describe('Get Reciepes -- no authentication needed', function () {
+  // somehow all Receipe-functions are not working currently.
   // beforeEach(function () {
   //   Receipe.remove();
   // });
@@ -48,7 +52,6 @@ describe('Get Reciepes -- no authentication needed', function () {
           var result = _.map(res.body, function (receipe) {
             return {
               name: receipe.name
-              // ingredients: receipe.ingredients
             }
           });
           expect(result).to.deep.include({name: "newtest1"});
@@ -93,7 +96,119 @@ describe('Get Reciepes -- no authentication needed', function () {
   });
 });
 
+/**
+ * Tests that need a valid login:
+ */
+
+//let's set up the data we need to pass to the login method
+const userCredentials = {
+  email: 'bla300022@bla.de',
+  password: 'login'
+};
+
+const updateReceipe = {
+  "name": "updated",
+  "ingredients": {
+    "flour": 2.0
+  }
+};
+
+//now let's login the user before we run any tests
+var authenticatedUser = request.agent(server);
+
+before(function (done) {
+  authenticatedUser
+    .post('/login')
+    .send(userCredentials)
+    .end(function (err, response) {
+      expect(response.statusCode).to.equal(302);
+      done();
+    });
+});
+
+describe('Functions that need authentication.', function () {
+  describe('Testing update-functionality.', function () {
+    it('Update testreceipe', function (done) {
+      authenticatedUser
+        .patch('/receipe/' + id)
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          result = res.body;
+          expect(result).to.deep.include({_id: id});
+          expect(result).to.deep.include({name: "updated"});
+          expect(result.ingredients).to.deep.include({flour: 2});
+          done()
+        });
+    });
+    it('Update a wrong id', function (done) {
+      authenticatedUser
+        .patch('/receipe/' + no_id)
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('null');
+          done()
+        });
+    });
+    it('Update a invalid id', function (done) {
+      authenticatedUser
+        .patch('/receipe/' + '123456')
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          result = res.body;
+          expect(result).to.deep.include({"name": "CastError"});
+          done();
+        });
+    });
+  });
+  describe('Testing delete-functionality.', function () {
+    it('Delete testreceipe', function (done) {
+      authenticatedUser
+        .delete('/receipe/' + id)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          result = res.body;
+          expect(result).to.deep.include({message: "Receipe succesfully deleted"});
+          done()
+        });
+    });
+    it('Delete a wrong id', function (done) {
+      authenticatedUser
+        .delete('/receipe/' + no_id)
+        .set('content-type', 'application/json')
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('null');
+          done()
+        });
+    });
+    it('Delete an invalid id', function (done) {
+      authenticatedUser
+        .patch('/receipe/' + '123456')
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          result = res.body;
+          expect(result).to.deep.include({"name": "CastError"});
+          done();
+        });
+    });
+  });
+});
+
 /*
 TODO:
- - push/update/delete method that require authentication
+- correct beforeEach-function.
+- receipe-creation test.
+- correct delete-tests.
  */
