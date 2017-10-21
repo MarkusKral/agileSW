@@ -37,9 +37,9 @@ var no_id = '59e9f960ff8b42eb0ed4bb51';
 
 
 describe('Get Reciepes -- no authentication needed', function () {
-  // somehow all Receipe-functions are not working currently.
+  //somehow all Receipe-functions are not working currently.
   // beforeEach(function () {
-  //   Receipe.remove();
+  //   Receipe.remove({});
   // });
   describe('GET /receipe', function () {
     it('should return all the recipes', function (done) {
@@ -204,11 +204,54 @@ describe('Functions that need authentication.', function () {
         });
     });
   });
+  describe.only('Testing create-functionality.', function () {
+    it( 'Create a receipe', function (done) {
+      authenticatedUser
+        .post('/receipe/')
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          result = res.body;
+          expect(result).to.deep.include({name: "updated"});
+          expect(result).to.deep.include({ingredients: {flour: 2}});
+          done()
+        });
+    });
+    it('Create without a name', function (done) {
+      delete updateReceipe['name']
+      authenticatedUser
+        .post('/receipe/')
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          expect(res.body).to.deep.include({message: "Receipe validation failed: name: A receipe needs a name."});
+          done()
+        });
+    });
+    it('Create without ingredients', function (done) {
+      updateReceipe['name'] = "test";
+      delete updateReceipe['ingredients'];
+      authenticatedUser
+        .post('/receipe/')
+        .set('content-type', 'application/json')
+        .send(updateReceipe)
+        .end(function (err, res) {
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('Object');
+          expect(res.body).to.deep.include({message: "Receipe validation failed: ingredients: " +
+                                                     "A receipe needs ingredients."});
+          done();
+        });
+    });
+  });
 });
 
 /*
 TODO:
 - correct beforeEach-function.
-- receipe-creation test.
 - correct delete-tests.
  */
