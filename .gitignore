@@ -3,3 +3,4 @@
 # no node_modules shall be commited.
 node_modules
 package-lock.json
+*.swp
