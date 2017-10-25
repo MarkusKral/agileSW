@@ -1,0 +1,30 @@
+{
+  "name": "agile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "chai-things": "^0.2.0",
+    "eslint": "^4.9.0",
+    "istanbul": "^0.4.5",
+    "loadash": "^1.0.0",
+    "mongoose": "^4.12.3",
+    "supertest": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://mkr@kral.bayern:/srv/agile"
+  },
+  "author": "",
+  "license": "ISC"
+}
