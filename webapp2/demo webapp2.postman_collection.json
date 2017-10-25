@@ -1,0 +1,198 @@
+{
+	"info": {
+		"name": "demo webapp2",
+		"_postman_id": "f8bea87d-fc0f-e381-d7c2-bd6141a5e1d3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				},
+				"description": "get all receipes"
+			},
+			"response": []
+		},
+		{
+			"name": "getID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/receipe/{{id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"receipe",
+						"{{id}}"
+					]
+				},
+				"description": "get specific receipe"
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\":\"login\", \"email\":\"demo@demo.com\"}"
+				},
+				"url": {
+					"raw": "localhost:3000/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				},
+				"description": "signup new user"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"password\":\"login\", \"email\":\"demo@demo.com\"}"
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "login"
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/profile",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"profile"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "createReceipe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"receipe2\", \"ingredients\": {\"sugar\":1,\"salt\":2,\"flour\":3}}"
+				},
+				"url": {
+					"raw": "localhost:3000/receipe",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"receipe"
+					]
+				},
+				"description": "create a receipe"
+			},
+			"response": []
+		},
+		{
+			"name": "updateReceipe",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"demo-receipe\", \"ingredients\": {\"sugar\":200,\"salt\":2,\"flour\":3}}"
+				},
+				"url": {
+					"raw": "localhost:3000/receipe/{{id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"receipe",
+						"{{id}}"
+					]
+				},
+				"description": "update demo-receipe"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteReceipe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/receipe/{{id}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"receipe",
+						"{{id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

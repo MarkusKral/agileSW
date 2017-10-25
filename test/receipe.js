@@ -16,16 +16,16 @@ process.env.NODE_ENV = 'test';
 var mongoose = require("mongoose");
 
 var mongourl = 'mongodb://cookbook:12345678@localhost:27017/cookbookTest';
-var receipe = require('../../wit/webapp2/api/models/cookbook_model.js');
+var receipe = require('../webapp2/api/models/cookbook_model.js');
 mongoose.connect(mongourl);
 var db = mongoose.connection;
-var Receipe = require('../../wit/webapp2/api/models/cookbook_model.js');
-var User = require('../../wit/webapp2/api/models/user.js');
+var Receipe = require('../webapp2/api/models/cookbook_model.js');
+var User = require('../webapp2/api/models/user.js');
 
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../../wit/webapp2/server');
+var server = require('../webapp2/server');
 var expect = chai.expect;
 chai.use(require('chai-things'));
 chai.use(chaiHttp);

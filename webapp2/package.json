@@ -1,0 +1,28 @@
+{
+  "name": "wit-cookbook",
+  "version": "1.0.0",
+  "description": "Webapp development 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Markus Kral",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.4",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.11.11",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-cookie": "^1.0.4",
+    "passport-local": "^1.0.0"
+  }
+}
