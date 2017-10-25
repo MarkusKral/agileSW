@@ -3,7 +3,6 @@
 var mongoose = require('mongoose'),
   Receipe = mongoose.model('Receipe'),
   User = mongoose.model('User');
-var bcrypt = require('bcrypt')
 
 exports.list_all_receipe= function(req, res) {
   Receipe.find({}, function(err, task) {
